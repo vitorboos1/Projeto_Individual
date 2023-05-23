@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéTech - Pesquisa</title>
+    <link rel="icon" href="Imagens/pokeball.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <img src="Imagens/pokeball.png" alt="PokeBall" class="logo">
+        <ul class="lista">
+            <li class="link"><a href="index.html">Pokédex</a></li>
+            <li class="link">|</li>
+            <li class="link"><a href="home.html">Home</a></li>
+        </ul>
+    </header>
+    <div id="tela_1">
+        <h2>Bem-vindo a pesquisa</h2>
+        <br>
+        <main>
+            <div class="perguntas">
+                <img src="Imagens/pokeball(1).png" alt="pokeball" width="200px" class="logo">
+                <p class="pergunta">Primeiramente, insira seu nome</p>
+                <input id="ipt_nome" class="input">
+                <br> <br>
+                <p class="pergunta">Insira de qual estado do Brasil você se encontra</p>
+                <input id="ipt_estado" class="input">
+                <br> <br>
+                <p class="pergunta">Insira qual seu pokémon inicial favorito</p>
+                <input id="ipt_favorito" class="input">
+                <br>
+                <button onclick="cadastrar()" class="botao">Cadastrar dados</button>
+            </div>
+    </div>
+    </main>
+    <main>
+        <div id="tela_2" style="display: none;">
+            <h2>Cadastro realizado com sucesso!</h2>
+            <div class="perguntas">
+                <img src="Imagens/pokeball(1).png" alt="pokeball" width="200px" class="logo">
+                <p>Seu cadastro foi realizado com sucesso</p>
+                <br>
+                <p>Caso queria editar seus dados clique no botão logo abaixo:</p>
+                <button onclick="editar()" class="botao">Editar dados</button>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
+
+<script>
+    function cadastrar() {
+        tela_1.style.display = "none"
+        tela_2.style.display = "block"
+    }
+    function editar() {
+        tela_1.style.display = "block"
+        tela_2.style.display = "none"
+    }
+
+
+
+</script>
