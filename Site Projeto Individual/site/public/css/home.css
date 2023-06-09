@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    height: 650px;
+    background-image: url(../imagens/661582.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;    
+    display: flex;
+    justify-content: space-between;
+}   
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-left:200px;
+    margin-top: 20px;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    cursor:pointer;
+}
+
+ul {
+    display: flex;
+    margin-left: 380px;
+}
+
+.lista {
+    list-style: none;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 50px;
+}
+
+.lista:hover {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+/* Fim do header */
+
+.divisoria {
+    background-color: black;
+    height: 5px;
+    width: 100%;
+}
+
+.sobre_nos {
+    height: 600px;
+    background-image: url(../imagens/1305158.jpeg);
+    background-size: 100% 600px;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items:center;
+    padding-left: 100px;
+}
+
+main p, h1 {
+    color: white;
+}
+
+.texto {
+    background-color: black;
+    width: 350px;
+    height: 135px;
+    border: yellow solid 2px;
+    border-radius: 10px;
+    padding: 5px;
+}
+/* Fim sobre nos */
+
+.anime {
+    height: 800px;
+    background-image: url(../imagens/437300.jpg);
+    background-size: 100% 830px ;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+}
+
+.trailer_anime {
+    display: flex;
+    justify-content: end;
+    padding-right: 40px;
+}
+
+.video_anime {
+    border-radius: 20px;
+    border: cyan solid 3px;
+}
+
+.primeiro_texto {
+    padding-left: 20px;
+    background-color: black;
+    width: 500px;
+    height: 250px;
+    padding-left: 100px;
+    border: aqua solid 2px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: large;
+}
+
+/* Fim anime */
+
+.jogo {
+    height: 800px;
+    background-image: url(../imagens/641419.png);
+    background-size: 100% 800px;
+}
+
+.trailer_jogo {
+    display: flex;
+    justify-content: end;
+    padding-right: 30px;
+}
+
+.video_jogo {
+    border-radius: 20px;
+    border: blue solid 3px;
+}
+
+.container {
+    padding-left: 40px;
+    width: 500px;
+    height: 350px;
+}
+
+.segundo_texto {
+    font-size: large;
+    background-color: black;
+    border: blue solid 4px;
+    border-radius: 10px;
+    padding: 15px;
+    padding-left: 20px;
+}
+
+.container_grafico {
+    height: 800px;
+    width: 100%;
+    background-color: #5e5b5bad;
+
+}
+
+.aba_grafico {
+    display: flex;
+    padding-left: 540px;
+    padding-top: 200px;
+    width: 800px;
+}
+
+
+
+
