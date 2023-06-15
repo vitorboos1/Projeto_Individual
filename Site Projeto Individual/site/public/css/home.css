@@ -98,7 +98,7 @@ main p, h1 {
 
 .primeiro_texto {
     padding-left: 20px;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.6);
     width: 500px;
     height: 250px;
     padding-left: 100px;
@@ -135,7 +135,7 @@ main p, h1 {
 
 .segundo_texto {
     font-size: large;
-    background-color: black;
+    background-color:rgba(0, 0, 0, 0.6);
     border: blue solid 4px;
     border-radius: 10px;
     padding: 15px;
@@ -143,19 +143,22 @@ main p, h1 {
 }
 
 .container_grafico {
-    height: 800px;
+    height: 550px;
     width: 100%;
     background-color: #5e5b5bad;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .aba_grafico {
     display: flex;
-    padding-left: 540px;
-    padding-top: 200px;
     width: 800px;
 }
 
+.h1 {
+    background-color: #5e5b5bad;
+}
 
 
 

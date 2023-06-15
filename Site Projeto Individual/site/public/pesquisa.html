@@ -16,7 +16,7 @@
 
 <body>
     <header>
-        <img src="Imagens/pokeball.png" alt="PokeBall" class="logo">
+        <img src="imagens/pokeball.png" alt="PokeBall" class="logo">
         <ul class="lista">
             <li class="link"><a href="pokedex.html">Pokédex</a></li>
             <li class="link">|</li>
@@ -28,13 +28,16 @@
         <br>
         <main>
             <div class="perguntas">
-                <img src="Imagens/pokeball(1).png" alt="pokeball" width="200px" class="logo">
+                <img src="imagens/pokeball(1).png" alt="pokeball" width="200px" class="logo">
                 <p class="pergunta">Primeiramente, insira seu nome</p>
                 <input id="ipt_nome" class="input">
                 <br> <br>
                 <p class="pergunta">Insira de qual estado do Brasil você se encontra</p>
                 <input id="ipt_estado" class="input">
                 <br> <br>
+                <p class="pergunta">Insira seu número de telefone (apenas números)</p>
+                <input id="ipt_telefone" class="input">
+                <br><br>
                 <p class="pergunta">Insira qual seu pokémon inicial favorito</p>
                 <input id="ipt_pokemon" class="input">
                 <br>
@@ -46,11 +49,22 @@
         <div id="tela_2" style="display: none;">
             <h2>Cadastro realizado com sucesso!</h2>
             <div class="perguntas">
-                <img src="Imagens/pokeball(1).png" alt="pokeball" width="200px" class="logo">
+                <img src="imagens/pokeball(1).png" alt="pokeball" width="200px" class="logo">
                 <p>Seu cadastro foi realizado com sucesso</p>
                 <br>
                 <p>Caso queria editar seus dados clique no botão logo abaixo:</p>
                 <button onclick="editar()" class="botao">Editar dados</button>
+            </div>
+        </div>
+
+        <div id="tela_3" style="display: none;">
+            <h2>Seu cadastro não foi realizado</h2>
+            <div class="perguntas">
+                <img src="imagens/pokeball(1).png" alt="pokeball" width="200px" class="logo">
+                <p>Seu cadastro não foi realizado</p>
+                <br>
+                <p>Caso queria responder a pesquisa novamente, clique no botão abaixo:</p>
+                <button onclick="editar()" class="botao">Inserir informações</button>
             </div>
         </div>
     </main>
@@ -59,21 +73,45 @@
 </html>
 
 <script>
+    var vt_pokemon = ["bulbasaur", "ivysaur", "venosaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise", "pikachu", "eevee", "chikorita", "bayleef", "meganium", "cyndaquil", "quilava", "typhlosion", "totodile", "croconaw", "feraligatr", "treecko", "grovyle", "sceptile", "torchic", "combusken", "blaziken", "mudkip", "marshtomp", "swampert", "turtwig", "grotle", "torterra", "chimchar", "monferno", "infernape", "piplup", "prinplup", "empoleon", "snivy", "servine", "serperior", "tepig", "pignite", "emboar", "oshawott", "dewott", "samurott", "chespin", "quiladin", "chesnaught", "fennekin", "braixen", "delphox", "froakie", "frogadier", "greninja", "rowlet", "dartrix", "decidueye", "litten", "torracat", "incineroar", "popplio", "brionne", "primarina", "grookey", "thwackey", "rilaboom", "scorbunny", "raboot", "cinderace", "sobble", "drizzile", "inteleon", "sprigatito", "floragato", "meowscarada", "fuecoco", "crocalor", "skeledirge", "quaxly", "quaxwell", "quaquaval"]
+
     function cadastrar() {
         tela_1.style.display = "none"
         tela_2.style.display = "block"
+
+        if (ipt_nome.value == "" || ipt_estado.value == "" || ipt_pokemon.value == "" || ipt_telefone.value == "") {
+            alert("Alguma das informações está em branco, por favor, conferir")
+            tela_1.style.display = "none"
+            tela_2.style.display = "none"
+            tela_3.style.display = "block"
+        }
+
+        if (ipt_telefone.value.length > 10 || isNaN(ipt_telefone.value)) {
+            alert("O número de telefone deve ter no máximo 10 dígitos e deve ser um número, por favor insira as informações novamente")
+            tela_1.style.display = "none"
+            tela_2.style.display = "none"
+            tela_3.style.display = "block"
+        }
+
+        if (vt_pokemon.indexOf(ipt_pokemon.value) == -1) {
+            alert("O nome inserido deve ser um nome de um pokémon inicial")
+            tela_1.style.display = "none"
+            tela_2.style.display = "none"
+            tela_3.style.display = "block"
+        }
 
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
         var nomeVar = ipt_nome.value;
         var estadoVar = ipt_estado.value;
         var pokemonVar = ipt_pokemon.value;
+        var telefoneVar = ipt_telefone.value;
         var idUsuario;
         var idPokemon;
-        if (nomeVar == "" || estadoVar == "" || pokemonVar == "") {
+
+        if (nomeVar == "" || estadoVar == "" || pokemonVar == "" || telefoneVar == "") {
             cardErro.style.display = "block"
             mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-
             // finalizarAguardar();
             return false;
         }
@@ -100,86 +138,126 @@
                     resposta.json().then(json => {
                         console.log(json)
                         idUsuario = json.insertId
-                        
+
                         fetch("/pokemon/cadastrar", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            // crie um atributo que recebe o valor recuperado aqui
-                            // Agora vá para o arquivo routes/usuario.js
-                            pokemonServer: pokemonVar,
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                // crie um atributo que recebe o valor recuperado aqui
+                                // Agora vá para o arquivo routes/usuario.js
+                                pokemonServer: pokemonVar,
 
-                        })
-                    }).then(function (resposta) {
+                            })
+                        }).then(function (resposta) {
 
-                        console.log("resposta: ", resposta);
+                            console.log("resposta: ", resposta);
 
-                        if (resposta.ok) {
-                            resposta.json().then(json => {
-                        console.log(json)
-                        idPokemon = json.insertId
-                        console.log(idUsuario, idPokemon)
+                            if (resposta.ok) {
+                                resposta.json().then(json => {
+                                    console.log(json)
+                                    idPokemon = json.insertId
+                                    console.log(idUsuario, idPokemon)
 
-                        fetch("/pokemonUsuario/cadastrar", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            // crie um atributo que recebe o valor recuperado aqui
-                            // Agora vá para o arquivo routes/usuario.js
-                            pokemonServer: idPokemon,
-                            usuarioServer: idUsuario
+                                    fetch("/pokemonUsuario/cadastrar", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            // crie um atributo que recebe o valor recuperado aqui
+                                            // Agora vá para o arquivo routes/usuario.js
+                                            pokemonServer: idPokemon,
+                                            usuarioServer: idUsuario
 
-                        })
-                    }).then(function (resposta) {
+                                        })
+                                    }).then(function (resposta) {
 
-                        console.log("resposta: ", resposta);
+                                        console.log("resposta: ", resposta);
 
-                        if (resposta.ok) {
-                            resposta.json().then(json => {
-                        console.log(json)
-                        console.log(idUsuario, idPokemon)
-                    })
-                            cardErro.style.display = "block";
+                                        if (resposta.ok) {
+                                            resposta.json().then(json => {
+                                                console.log(json)
+                                                console.log(idUsuario, idPokemon)
+
+                                                fetch("/pokemonUsuario/telefone", {
+                                                    method: "POST",
+                                                    headers: {
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    body: JSON.stringify({
+                                                        // crie um atributo que recebe o valor recuperado aqui
+                                                        // Agora vá para o arquivo routes/usuario.js
+                                                        usuarioServer: idUsuario,
+                                                        telefoneServer: telefoneVar
+
+                                                    })
+                                                }).then(function (resposta) {
+
+                                                    console.log("resposta: ", resposta);
+
+                                                    if (resposta.ok) {
+                                                        resposta.json().then(json => {
+                                                            console.log(json)
+                                                            console.log(idUsuario, idPokemon)
+                                                        })
+                                                        cardErro.style.display = "block";
 
 
-                            mensagem_erro.innerHTML = "Pesquisa realizada com sucesso! Redirecionando para a tela inicial";
+                                                        mensagem_erro.innerHTML = "Pesquisa realizada com sucesso! Redirecionando para a tela inicial";
 
-                            // setTimeout(() => {
-                            //     window.location = "login.html";
-                            // }, "2000")
+                                                        // setTimeout(() => {
+                                                        //     window.location = "login.html";
+                                                        // }, "2000")
 
-                            // limparFormulario();
+                                                        // limparFormulario();
+                                                        // finalizarAguardar();
+                                                    } else {
+                                                        throw ("Houve um erro ao tentar responder a pesquisa!");
+                                                    }
+                                                }).catch(function (resposta) {
+                                                    console.log(`#ERRO: ${resposta}`);
+                                                    // finalizarAguardar();
+                                                });
+                                            })
+                                            cardErro.style.display = "block";
+
+
+                                            mensagem_erro.innerHTML = "Pesquisa realizada com sucesso! Redirecionando para a tela inicial";
+
+                                            // setTimeout(() => {
+                                            //     window.location = "login.html";
+                                            // }, "2000")
+
+                                            // limparFormulario();
+                                            // finalizarAguardar();
+                                        } else {
+                                            throw ("Houve um erro ao tentar responder a pesquisa!");
+                                        }
+                                    }).catch(function (resposta) {
+                                        console.log(`#ERRO: ${resposta}`);
+                                        // finalizarAguardar();
+                                    });
+                                })
+                                cardErro.style.display = "block";
+
+
+                                mensagem_erro.innerHTML = "Pesquisa realizada com sucesso! Redirecionando para a tela inicial";
+
+                                // setTimeout(() => {
+                                //     window.location = "login.html";
+                                // }, "2000")
+
+                                // limparFormulario();
+                                // finalizarAguardar();
+                            } else {
+                                throw ("Houve um erro ao tentar responder a pesquisa!");
+                            }
+                        }).catch(function (resposta) {
+                            console.log(`#ERRO: ${resposta}`);
                             // finalizarAguardar();
-                        } else {
-                            throw ("Houve um erro ao tentar responder a pesquisa!");
-                        }
-                    }).catch(function (resposta) {
-                        console.log(`#ERRO: ${resposta}`);
-                        // finalizarAguardar();
-                    });
-                    })
-                            cardErro.style.display = "block";
-
-
-                            mensagem_erro.innerHTML = "Pesquisa realizada com sucesso! Redirecionando para a tela inicial";
-
-                            // setTimeout(() => {
-                            //     window.location = "login.html";
-                            // }, "2000")
-
-                            // limparFormulario();
-                            // finalizarAguardar();
-                        } else {
-                            throw ("Houve um erro ao tentar responder a pesquisa!");
-                        }
-                    }).catch(function (resposta) {
-                        console.log(`#ERRO: ${resposta}`);
-                        // finalizarAguardar();
-                    });
+                        });
                     })
 
 
@@ -209,6 +287,11 @@
     function editar() {
         tela_1.style.display = "block"
         tela_2.style.display = "none"
+        tela_3.style.display = "none"
+        ipt_estado.value = ""
+        ipt_nome.value = ""
+        ipt_pokemon.value = ""
+        ipt_telefone.value = ""
     }
 
 

@@ -26,7 +26,9 @@ primary key (fkPokemon, fkUsuario),
 foreign key (fkPokemon) references pokemon(idPokemon),
 foreign key (fkUsuario) references usuario(idUsuario));
 
-
+create table Telefone (
+fkUsuario int,
+telUsuario varchar(15));
 
 
 
